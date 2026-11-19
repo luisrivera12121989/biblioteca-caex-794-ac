@@ -1,9 +1,20 @@
-BIBLIOTECA TÉCNICA CAEX 794 AC — PWA
+BIBLIOTECA TÉCNICA CAEX 794 AC — PAQUETE PWA
 
-Para publicar en GitHub Pages:
+CONTENIDO
+- index.html: biblioteca completa, con el diseño y funciones del HTML mejorado.
+- manifest.webmanifest: configuración de instalación.
+- sw.js: caché para uso sin conexión después de la primera carga.
+- icons/: iconos de la aplicación.
+
+PUBLICACIÓN EN GITHUB PAGES
 1. Descomprime este ZIP.
-2. Sube TODO el contenido de esta carpeta al repositorio (index.html, manifest.webmanifest, sw.js e icons/).
-3. Activa GitHub Pages desde Settings > Pages si aún no está activo.
-4. Abre la URL HTTPS en Chrome/Edge y pulsa “Instalar app”. En iPhone/iPad: Safari > Compartir > Agregar a pantalla de inicio.
+2. Sube TODO el contenido de esta carpeta al repositorio (index.html debe quedar en la raíz publicada).
+3. Mantén la carpeta icons y los archivos manifest.webmanifest y sw.js junto a index.html.
+4. Activa GitHub Pages y abre la URL HTTPS publicada.
+5. En Android/Chrome: usa el botón “Instalar app” cuando el navegador habilite la instalación.
+6. En iPhone/iPad: abre en Safari > Compartir > Agregar a pantalla de inicio.
 
-La instalación PWA y el modo offline requieren HTTPS (por ejemplo GitHub Pages). El archivo HTML por sí solo conserva el diseño y el botón, pero para instalar y habilitar caché offline debes publicar el paquete completo.
+NOTA
+La instalación PWA requiere HTTPS (GitHub Pages lo proporciona). La disponibilidad offline se activa
+después de cargar la aplicación por primera vez con conexión. Algunos navegadores pueden mostrar
+la opción de instalación en su propio menú aunque el botón de la página no dispare el aviso nativo.

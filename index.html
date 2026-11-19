@@ -128,6 +128,7 @@ main{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blu
 .install-app:hover{background:#ffd33d;border-color:#fff0a6}
 .install-app[hidden]{display:none!important}
 @media(max-width:760px){body{background-attachment:scroll;background-position:center top}header{background:rgba(17,17,15,.97)}#installApp{order:7}}
+
 </style></head><body>
 <header><h1><b>CAEX 794 AC</b> · Biblioteca de estudio</h1><button id="mb" aria-expanded="false" aria-controls="nav">☰ Temas</button><button id="lg" title="Ver identidad de la biblioteca">CAT</button><button id="installApp" class="install-app" type="button">⬇ Instalar app</button><input type="search" id="q" placeholder="Buscar: ej. peso motor, filtro hidráulico, ISO 18/15…" aria-label="Buscar"><button id="en" title="Mostrar/ocultar texto original en inglés">EN</button><button id="ab" title="Audiolibro">🎧</button><button id="hp" title="Acerca de la biblioteca" aria-label="Acerca de la biblioteca">?</button><button id="th">◐</button></header>
 <div class="wrap"><nav id="nav"></nav><main id="main"></main></div><div id="lb"><img alt=""></div>
@@ -323,18 +324,32 @@ if(!seen)wOpen();
 let deferredInstallPrompt=null;
 const installBtn=document.getElementById("installApp");
 const isStandalone=()=>window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
-function syncInstallButton(){if(isStandalone()){installBtn.hidden=true;return}installBtn.hidden=false;installBtn.textContent=deferredInstallPrompt?"⬇ Instalar app":"⬇ Instalar app";}
+function syncInstallButton(){
+ if(isStandalone()){installBtn.hidden=true;return}
+ installBtn.hidden=false;
+}
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;syncInstallButton()});
 window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;installBtn.hidden=true});
 installBtn.addEventListener("click",async()=>{
- if(deferredInstallPrompt){deferredInstallPrompt.prompt();const choice=await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;syncInstallButton();return}
+ if(deferredInstallPrompt){
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+  syncInstallButton();
+  return;
+ }
  const ua=navigator.userAgent||"";
- if(/iphone|ipad|ipod/i.test(ua)){alert("Para instalar en iPhone o iPad: toca Compartir en Safari y selecciona ‘Agregar a pantalla de inicio’. ");return}
+ if(/iphone|ipad|ipod/i.test(ua)){
+  alert("Para instalar en iPhone o iPad: toca Compartir en Safari y selecciona ‘Agregar a pantalla de inicio’.");
+  return;
+ }
  if(isStandalone()){installBtn.hidden=true;return}
- alert("Para instalar esta biblioteca, abre su dirección HTTPS en Chrome o Edge y usa el menú del navegador: ‘Instalar aplicación’ o ‘Agregar a pantalla de inicio’. Si no aparece, primero publica la carpeta PWA en GitHub Pages.");
+ alert("Para instalar esta biblioteca, abre su dirección HTTPS en Chrome o Edge y usa el menú del navegador: ‘Instalar aplicación’ o ‘Agregar a pantalla de inicio’. Si no aparece, verifica que esté publicada la carpeta PWA completa en GitHub Pages.");
 });
 syncInstallButton();
-if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("No se pudo registrar el modo offline:",err)))}
+if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(err=>console.warn("No se pudo registrar el modo offline:",err)));
+}
 
 nav();open_(0);
 </script></body></html>

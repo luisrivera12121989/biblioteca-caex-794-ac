@@ -4,7 +4,7 @@
   "short_name": "CAEX 794 AC",
   "description": "Plataforma digital de estudio y consulta técnica del CAEX 794 AC.",
   "lang": "es-CL",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
