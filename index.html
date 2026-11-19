@@ -13,6 +13,17 @@ button:hover{border-color:var(--ac)}
 .wrap{display:flex;max-width:1200px;margin:0 auto}
 nav{width:300px;flex:none;padding:14px;position:sticky;top:60px;align-self:flex-start;max-height:calc(100vh - 60px);overflow:auto}
 nav h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin:14px 0 4px}
+nav .navtop{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:0;background:var(--bg);padding:4px 0 10px;z-index:2}
+nav .navtop strong{font-size:15px}
+nav .navprogress{font-size:12px;color:var(--mu);margin:0 0 10px}
+nav .navfilter{width:100%;padding:9px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--sf);color:var(--tx);font:inherit;margin-bottom:10px}
+nav details{margin:0 0 6px;border-bottom:1px solid var(--bd);padding-bottom:5px}
+nav summary{cursor:pointer;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--mu);padding:8px 4px;list-style-position:inside}
+nav details a{padding-left:12px}
+.install-btn{border-color:var(--ac);background:var(--ac);color:#171717;font-weight:700;white-space:nowrap}
+.install-btn:hover{filter:brightness(1.06)}
+@media(max-width:760px){nav{padding:calc(70px + env(safe-area-inset-top,0px)) 14px 24px;max-height:100dvh;overflow-y:auto;overscroll-behavior:contain}nav .navtop{top:0}header{padding-top:calc(10px + env(safe-area-inset-top,0px))}#install{font-size:13px;padding:7px 9px}}
+
 nav a{display:flex;justify-content:space-between;gap:6px;padding:5px 8px;border-radius:6px;color:var(--tx);text-decoration:none;font-size:14px;cursor:pointer;line-height:1.3}
 nav a:hover{background:var(--hl)}nav a.on{background:var(--ac);color:#111}nav a.ok::after{content:"✓";color:#2a9d4a;font-weight:700}
 main{flex:1;min-width:0;padding:18px 22px 60px}
@@ -81,7 +92,7 @@ button,a,input,select{touch-action:manipulation}button{min-height:40px}
 @media(min-width:761px){.brand img{width:54px;height:54px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style></head><body>
-<header><h1 class="brand"><img src="logo.png" alt="Made in Luis Rivera"/><span><b>CAEX 794 AC</b><small>Biblioteca de estudio · MADE IN LUIS RIVERA</small></span></h1><button id="mb">☰ Temas</button><input type="search" id="q" placeholder="Buscar: ej. peso motor, filtro hidráulico, ISO 18/15…" aria-label="Buscar"><button id="en" title="Mostrar/ocultar texto original en inglés">EN</button><button id="ab" title="Audiolibro">🎧</button><button id="hp" title="Acerca de la biblioteca" aria-label="Acerca de la biblioteca">?</button><button id="th">◐</button></header>
+<header><h1 class="brand"><img src="logo.png" alt="Made in Luis Rivera"/><span><b>CAEX 794 AC</b><small>Biblioteca de estudio · MADE IN LUIS RIVERA</small></span></h1><button id="mb">☰ Temas</button><input type="search" id="q" placeholder="Buscar: ej. peso motor, filtro hidráulico, ISO 18/15…" aria-label="Buscar"><button id="en" title="Mostrar/ocultar texto original en inglés">EN</button><button id="ab" title="Audiolibro">🎧</button><button id="hp" title="Acerca de la biblioteca" aria-label="Acerca de la biblioteca">?</button><button id="th" title="Cambiar tema">◐</button><button id="install" class="install-btn" type="button">⬇ Instalar app</button></header>
 <div class="wrap"><nav id="nav"></nav><main id="main"></main></div><div id="lb"><img alt=""></div>
 <div id="wl" role="dialog" aria-modal="true" aria-labelledby="wlt"><div class="cd"><div class="hz"></div><div class="bd">
 <h2 id="wlt">Bienvenido a la biblioteca técnica del CAEX 794 AC</h2>
@@ -107,10 +118,26 @@ const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const tx=i=>D.tr[i[1]]||i[1];let cur=0;
 const tbl=(T,hl,k)=>{const m=s=>hl?mk(s,hl):esc(s);
  return `<div class="tw" data-k="${k}"><table class="dt"><thead><tr>${T.cols.map((c,j)=>`<th class="${(T.num.includes(j)?"n ":"")+((T.nw||[]).includes(j)?"w":"")}">${m(c)}</th>`).join("")}</tr></thead><tbody>${T.rows.map(r=>`<tr>${r.map((c,j)=>`<td class="${(T.num.includes(j)?"n ":"")+((T.nw||[]).includes(j)?"w":"")}">${m(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`};
-function nav(){const g={};D.docs.forEach((d,i)=>(g[d.c]=g[d.c]||[]).push(i));
- const done=Object.keys(ok).length;
- $("#nav").innerHTML=`<div class="meta">Estudiado: ${done} de ${D.docs.length}</div>`+Object.entries(g).map(([c,a])=>`<h3>${c}</h3>`+a.map(i=>`<a data-i="${i}" class="${i==cur?"on ":""}${ok[i]?"ok":""}">${D.docs[i].t}</a>`).join("")).join("");
- document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>{open_(+a.dataset.i);$("#nav").classList.remove("open")})}
+function nav(){
+ const g={};
+ D.docs.forEach((d,i)=>(g[d.c||"Sin categoría"]=g[d.c||"Sin categoría"]||[]).push(i));
+ const done=Object.keys(ok).filter(k=>ok[k]).length;
+ const groups=Object.entries(g).map(([c,a])=>`<details open><summary>${esc(c)} <span>(${a.length})</span></summary>${a.map(i=>`<a data-i="${i}" data-title="${esc((D.docs[i].t+" "+(D.docs[i].c||"")).toLowerCase())}" class="${i==cur?"on ":""}${ok[i]?"ok":""}">${esc(D.docs[i].t)}</a>`).join("")}</details>`).join("");
+ $("#nav").innerHTML=`<div class="navtop"><strong>Temas · ${D.docs.length}</strong><button type="button" id="navClose" aria-label="Cerrar menú">✕</button></div><div class="navprogress">Estudiados: ${done} de ${D.docs.length}</div><input class="navfilter" id="navFilter" type="search" placeholder="Filtrar temas..." aria-label="Filtrar temas">${groups}`;
+ const close=()=>$("#nav").classList.remove("open");
+ const closeBtn=$("#navClose"); if(closeBtn) closeBtn.onclick=close;
+ const filter=$("#navFilter");
+ if(filter) filter.oninput=()=>{
+   const q=filter.value.trim().toLocaleLowerCase();
+   document.querySelectorAll("#nav details").forEach(group=>{
+     let visible=0;
+     group.querySelectorAll("a").forEach(a=>{const show=!q||a.dataset.title.includes(q);a.style.display=show?"flex":"none";if(show)visible++});
+     group.style.display=visible?"block":"none";
+     if(q&&visible)group.open=true;
+   });
+ };
+ document.querySelectorAll("#nav a").forEach(a=>a.onclick=()=>{open_(+a.dataset.i);close()});
+}
 function open_(i,hl,kk){cur=i;const d=D.docs[i];let h=`<div class="bar"><h2>${d.t}</h2></div><div class="meta">${d.c} · ${d.src||(d.n+" pág. del PDF (desde la "+d.p+") · Manual UENR2267-19")}</div><div class="bar"><button id="ck">${ok[i]?"✓ Estudiado":"Marcar como estudiado"}</button></div>`;
  d.it.forEach((it,k)=>{if(it[0]=="T"){h+=tbl(it[1],hl,k);return}if(it[0]=="G"){h+=`<div class="gal" data-k="${k}">${it[1].map(g=>`<figure><img src="${D.imgs[g[0]]}" loading="lazy" alt="${esc(g[1])}"><figcaption>${esc(g[1])}</figcaption></figure>`).join("")}</div>`;return}
   if(it[0]=="i"){h+=`<figure data-k="${k}"><img src="${D.imgs[it[1]]}" loading="lazy" alt="${it[2]?esc(it[2]):"Ilustración del manual"}">${it[2]?`<figcaption>${esc(it[2])}</figcaption>`:""}</figure>`;return}
@@ -253,4 +280,36 @@ W.addEventListener("click",e=>{if(e.target===W)wClose()});
 document.addEventListener("keydown",e=>{if(e.key=="Escape"&&W.classList.contains("on"))wClose()});
 if(!seen)wOpen();
 nav();open_(0);
-</script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(e=>console.warn("PWA offline no disponible",e)));}</script></body></html>
+</script><script>
+let deferredInstallPrompt=null;
+const installButton=document.getElementById("install");
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+if(isStandalone){installButton.textContent="✓ Aplicación instalada";installButton.disabled=true}
+window.addEventListener("beforeinstallprompt",event=>{
+ event.preventDefault();
+ deferredInstallPrompt=event;
+ installButton.hidden=false;
+ installButton.textContent="⬇ Instalar app";
+});
+installButton.addEventListener("click",async()=>{
+ if(isStandalone){return}
+ if(deferredInstallPrompt){
+   deferredInstallPrompt.prompt();
+   const result=await deferredInstallPrompt.userChoice;
+   if(result&&result.outcome==="accepted")installButton.textContent="Instalando…";
+   deferredInstallPrompt=null;
+   return;
+ }
+ if(isIOS){
+   alert("Para instalar en iPhone: abre esta página en Safari, pulsa Compartir y selecciona «Añadir a pantalla de inicio».");
+ }else{
+   alert("Si no aparece la ventana de instalación, abre el menú del navegador (⋮ o ⋯) y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio». Si no aparece, comprueba que la página esté abierta mediante HTTPS y que haya terminado de cargar.");
+ }
+});
+window.addEventListener("appinstalled",()=>{
+ installButton.textContent="✓ Aplicación instalada";
+ installButton.disabled=true;
+});
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(e=>console.warn("PWA offline no disponible",e)));}</script></body></html>
