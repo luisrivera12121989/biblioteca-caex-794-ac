@@ -1,20 +1,11 @@
-BIBLIOTECA TÉCNICA CAEX 794 AC — PAQUETE PWA
+BIBLIOTECA CAEX 794 AC - APP PWA
+=================================
+Sube TODA esta carpeta (index.html, manifest.webmanifest, sw.js y la carpeta icons)
+a un sitio con HTTPS, por ejemplo GitHub Pages o Netlify Drop (netlify.com/drop).
 
-CONTENIDO
-- index.html: biblioteca completa, con el diseño y funciones del HTML mejorado.
-- manifest.webmanifest: configuración de instalación.
-- sw.js: caché para uso sin conexión después de la primera carga.
-- icons/: iconos de la aplicación.
+En el celular:
+- Android (Chrome): abre el enlace > menu (⋮) > "Instalar aplicación", o usa el botón de instalar dentro de la app.
+- iPhone (Safari): abre el enlace > Compartir > "Agregar a pantalla de inicio".
 
-PUBLICACIÓN EN GITHUB PAGES
-1. Descomprime este ZIP.
-2. Sube TODO el contenido de esta carpeta al repositorio (index.html debe quedar en la raíz publicada).
-3. Mantén la carpeta icons y los archivos manifest.webmanifest y sw.js junto a index.html.
-4. Activa GitHub Pages y abre la URL HTTPS publicada.
-5. En Android/Chrome: usa el botón “Instalar app” cuando el navegador habilite la instalación.
-6. En iPhone/iPad: abre en Safari > Compartir > Agregar a pantalla de inicio.
-
-NOTA
-La instalación PWA requiere HTTPS (GitHub Pages lo proporciona). La disponibilidad offline se activa
-después de cargar la aplicación por primera vez con conexión. Algunos navegadores pueden mostrar
-la opción de instalación en su propio menú aunque el botón de la página no dispare el aviso nativo.
+Despues de abrirla una vez con internet, funciona sin conexion.
+Si actualizas index.html, cambia VERSION en sw.js (ej. caex794-v3) para que los celulares reciban la nueva version.
