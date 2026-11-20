@@ -1,11 +1,24 @@
-BIBLIOTECA CAEX 794 AC - APP PWA
-=================================
-Sube TODA esta carpeta (index.html, manifest.webmanifest, sw.js y la carpeta icons)
-a un sitio con HTTPS, por ejemplo GitHub Pages o Netlify Drop (netlify.com/drop).
+BIBLIOTECA TÉCNICA CAEX 794 AC – PWA
+====================================
+Contenido: index.html, manifest.webmanifest, sw.js, carpeta icons/.
+Mantén todos los archivos juntos en la misma carpeta.
 
-En el celular:
-- Android (Chrome): abre el enlace > menu (⋮) > "Instalar aplicación", o usa el botón de instalar dentro de la app.
-- iPhone (Safari): abre el enlace > Compartir > "Agregar a pantalla de inicio".
+PUBLICAR (necesita HTTPS; abrir el archivo con doble clic NO instala la app)
+ - Netlify: entra a app.netlify.com/drop y arrastra esta carpeta.
+ - GitHub Pages: sube los archivos a un repositorio y activa Pages.
+ - Cualquier hosting propio con HTTPS.
 
-Despues de abrirla una vez con internet, funciona sin conexion.
-Si actualizas index.html, cambia VERSION en sw.js (ej. caex794-v4) para que los celulares reciban la nueva version.
+INSTALAR
+ - Android (Chrome/Edge): botón "Instalar App" o menú ⋮ > Instalar aplicación.
+ - iPhone/iPad (Safari): Compartir > Agregar a pantalla de inicio.
+ - PC (Chrome/Edge): ícono de instalar en la barra de direcciones.
+
+SIN CONEXIÓN
+ La primera vez que se abre con internet, la app guarda todo el manual
+ (texto, tablas, imágenes y códigos de falla) y luego funciona sin conexión.
+ Las fuentes de Google se guardan al primer uso; sin ellas se usa una fuente de respaldo.
+
+ACTUALIZAR
+ Reemplaza index.html y cambia VERSION en sw.js (por ejemplo "caex794-v4").
+ Los usuarios reciben la versión nueva al abrir la app con internet.
+ Favoritos y progreso quedan guardados en el dispositivo.

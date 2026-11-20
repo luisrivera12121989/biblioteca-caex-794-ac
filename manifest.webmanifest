@@ -1,10 +1,11 @@
 {
-  "name": "Biblioteca de estudio – CAEX 794 AC",
-  "short_name": "CAEX 794 AC",
-  "description": "Biblioteca técnica de estudio y consulta del CAEX 794 AC",
-  "lang": "es",
   "id": "./",
-  "start_url": "./?source=pwa",
+  "name": "Biblioteca técnica CAEX 794 AC",
+  "short_name": "CAEX 794 AC",
+  "description": "Biblioteca técnica de estudio y consulta del CAEX 794 AC. Funciona sin conexión.",
+  "lang": "es",
+  "dir": "ltr",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
@@ -12,7 +13,8 @@
   "theme_color": "#11110f",
   "categories": [
     "education",
-    "productivity"
+    "productivity",
+    "utilities"
   ],
   "icons": [
     {
@@ -32,12 +34,19 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
+    }
+  ],
+  "shortcuts": [
     {
-      "src": "icons/icon-1024.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any"
+      "name": "Códigos de falla",
+      "short_name": "Fallas",
+      "url": "./#fallas",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
