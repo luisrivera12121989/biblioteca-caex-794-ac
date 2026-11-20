@@ -1,8 +1,8 @@
 /* Service worker – Biblioteca CAEX 794 AC. Funciona sin conexión tras la primera visita. */
-const VERSION = "caex794-v2";
+const VERSION = "caex794-v3";
 const CORE = ["./", "./index.html", "./manifest.webmanifest",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png",
-  "./icons/apple-touch-icon.png", "./icons/favicon-48.png"];
+  "./icons/apple-touch-icon.png", "./icons/favicon-48.png", "./icons/icon-1024.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil((async () => {

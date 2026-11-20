@@ -8,4 +8,4 @@ En el celular:
 - iPhone (Safari): abre el enlace > Compartir > "Agregar a pantalla de inicio".
 
 Despues de abrirla una vez con internet, funciona sin conexion.
-Si actualizas index.html, cambia VERSION en sw.js (ej. caex794-v3) para que los celulares reciban la nueva version.
+Si actualizas index.html, cambia VERSION en sw.js (ej. caex794-v4) para que los celulares reciban la nueva version.
